@@ -17,7 +17,7 @@ mvn package
 ```
 
 ## Step 2a
-You might need to obtain the db2jcc4.jar and db2jcc_license_cu.jar files - you can download them from here, and place them in the `target` directory
+You might need to obtain the `db2jcc4.jar` and `db2jcc_license_cu.jar` files - you can download them from here, and place them in the `target` directory
 
 Use the following location to get JDBC 4.0 Driver (db2jcc4.jar) : https://www.ibm.com/support/pages/node/382667 
 
