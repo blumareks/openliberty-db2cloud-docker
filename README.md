@@ -85,12 +85,6 @@ curl http://localhost/system/properties-new
 
 ```
 
-The page to access the DB2 is here (`currentely this functionality is having issues`)
-
-```
-curl http://localhost/system/db2-crud
-```
-
 ## Cleanup
 To cleanup list running containers and stop them:
 
