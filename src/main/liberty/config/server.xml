@@ -1,0 +1,55 @@
+<server description="Sample Liberty server">
+
+  <featureManager>
+      <feature>jaxrs-2.1</feature>
+      <feature>jsonp-1.1</feature>
+      <feature>jdbc-4.3</feature>
+  </featureManager>
+   
+    <library id="DB2Lib">
+      <fileset dir="${shared.resource.dir}" includes="db2jcc4.jar db2jcc_license_cu.jar"/>
+    </library>
+   
+    <datasource id="testdatasource" jndiname="jdbc/testds">
+        <jdbcdriver libraryref="DB2Lib" />
+        <properties.db2.jcc databaseName="${env.DB2_DBNAME}" 
+          password="${env.DB2_PASSWORD}" 
+          portnumber="${env.DB2_PORT}" 
+          servername="${env.DB2_HOST}" 
+          user="${env.DB2_USER}"/>
+    </datasource>
+
+
+  <!-- DB2 start 
+  <dataSource id="db2" jndiName="jdbc/db2">
+    <jdbcDriver libraryRef="DB2JCC4Lib"/>
+    <properties.db2.jcc databaseName="SAMPLEDB" serverName="dashdb-txn-sbox-yp-dal09-11.services.dal.bluemix.net" portNumber="50001"/>
+  </dataSource>
+
+  <library id="DB2JCC4Lib">
+    <fileset dir="/opt/ol/wlp/usr/shared/resources/" includes="db2_db2driver_for_jdbc_sqlj.zip"/>
+  </library>
+
+<dataSource id="GoApp" jndiName="GoSale"  type="javax.sql.ConnectionPoolDataSource">       
+<jdbcDriver>
+  <library name="JdbcJarFiles">
+    <fileset dir="${shared.resource.dir}" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar, pdq.jar, pdqmgmt.jar"/>
+    <folder dir="${shared.resource.dir}"/> \
+  </library>
+</jdbcDriver>
+
+<properties.db2.jcc   driverType="4" databaseName="<database name>" portNumber="<database port>" serverName="<database server address>" user="<database username>"  password="<user's password>"
+
+</dataSource> 
+
+
+ DB2 end -->
+
+  <variable name="default.http.port" defaultValue="9080"/>
+  <variable name="default.https.port" defaultValue="9443"/>
+
+  <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
+      id="defaultHttpEndpoint" host="*" />
+
+  <webApplication location="rest.war" contextRoot="/"/>
+</server>
