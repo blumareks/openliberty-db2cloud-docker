@@ -1,0 +1,21 @@
+<server description="Sample Liberty server">
+
+  <featureManager>
+    <feature>jaxrs-2.1</feature>
+    <feature>jsonp-1.1</feature>
+    <feature>cdi-2.0</feature>
+    <feature>jsf-2.3</feature>
+    <feature>mpConfig-1.4</feature>
+    <feature>mpRestClient-1.4</feature>
+  </featureManager>
+
+  <variable name="default.http.port" defaultValue="9090"/>
+  <variable name="default.https.port" defaultValue="9091"/>
+
+  <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
+    id="defaultHttpEndpoint" host="*" />
+
+  <application location="frontendUI.war" context-root="/">
+  </application>
+
+</server>

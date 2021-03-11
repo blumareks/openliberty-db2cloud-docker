@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archive>
+    <dir sourceOnDisk="/Users/mareksadowski/Desktop/2021-fiserv/guide-jpa-intro/finish/backendServices/target/classes" targetInArchive="/WEB-INF/classes"/>
+    <file sourceOnDisk="/Users/mareksadowski/.m2/repository/com/ibm/db2/jcc/11.5.5.0/jcc-11.5.5.0.jar" targetInArchive="/WEB-INF/lib/jcc-11.5.5.0.jar"/>
+    <file sourceOnDisk="/Users/mareksadowski/Desktop/2021-fiserv/guide-jpa-intro/finish/backendServices/target/tmp/META-INF/MANIFEST.MF" targetInArchive="/META-INF/MANIFEST.MF"/>
+</archive>

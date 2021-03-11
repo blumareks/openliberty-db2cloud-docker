@@ -1,0 +1,4 @@
+io/openliberty/guides/event/resources/EventResource.class
+io/openliberty/guides/event/resources/EventApplication.class
+io/openliberty/guides/event/dao/EventDao.class
+io/openliberty/guides/event/models/Event.class

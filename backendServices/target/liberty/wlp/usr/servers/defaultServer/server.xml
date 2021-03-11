@@ -1,0 +1,49 @@
+<server description="Sample Liberty server">
+
+  <featureManager>
+    <feature>jaxrs-2.1</feature>
+    <feature>jsonp-1.1</feature>
+    <feature>cdi-2.0</feature>
+    <feature>jpa-2.2</feature>
+  </featureManager>
+
+  <variable name="default.http.port" defaultValue="5050"/>
+  <variable name="default.https.port" defaultValue="5051"/>
+
+  <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
+    id="defaultHttpEndpoint" host="*" />
+
+  <application location="backendServices.war" type="war" context-root="/">
+  </application>
+
+
+
+  
+  <!-- using maven to download the driver instead of manually dealing with the files: 
+    "db2jcc4.jar db2jcc_license_cu.jar"  
+  -->
+
+        
+  <!-- Derby Library Configuration -->    
+
+  <library id="db2jcclib">
+    <fileset dir="${shared.resource.dir}" includes="jcc*.jar"/>
+  </library>
+
+
+  <!-- Datasource Configuration -->
+  <!-- tag::data-source[] -->
+  <dataSource id="eventjpadatasource"
+              jndiName="jdbc/eventjpadatasource">
+  <jdbcdriver libraryref="db2jcclib" />
+  <properties.db2.jcc databasename="BLUDB"
+    portnumber="50000"
+    servername="dashdb-txn-sbox-yp-dal09-11.services.dal.bluemix.net"         
+    user="jqs67035" 
+    password="dc3r9vmn^8t506cm" />
+  </dataSource>
+
+
+  <!-- end::data-source[] -->
+
+</server>
