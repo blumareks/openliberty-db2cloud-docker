@@ -60,7 +60,7 @@ After creating the data you need to create/copy the service credentials. The cre
 Then you are ready to fillout and run your docker container:
 
 ```
-docker run  -d -p50500:5050 -p5051:5051 \
+docker run  -d -p5050:5050 -p5051:5051 \
 -e DB2_DBNAME="BLUDB" \
 -e DB2_PASSWORD="your-password" \
 -e DB2_PORT=50000 \
