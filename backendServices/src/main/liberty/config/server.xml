@@ -34,7 +34,8 @@
           password="${env.DB2_PASSWORD}" 
           portnumber="${env.DB2_PORT}" 
           servername="${env.DB2_HOST}" 
-          user="${env.DB2_USER}" />
+          user="${env.DB2_USER}" 
+          sslConnection="${env.DB2_SSL}" />
   </dataSource>
   <!-- end::data-source[] -->
 

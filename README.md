@@ -22,15 +22,75 @@ cd backendServices
 mvn package
 ```
 
-## Step 2a
+## Step 2a - JDBC library
 The jcc library for the DB2 connectivity is obtained via maven, and copied inside Dockerfile commands.
+
+## (optional) Step 2b - the DB2 SSL certificate
+**This step is optional, since Open Liberty server has already the certificate to the DB2 included.**
+
+A DB2 admin should be able to provide a SSL certifcate - the certificate can be downloaded from the DB2 Web console from the Connection Information section.
+
+Move the certificate to the target directory.
+
+```
+cd openliberty-db2cloud-docker/backendServices/target
+cp ~/Downloads/DigiCertGlobalRootCA.crt . 
+```
+
+The rest of the setup will happen when building the image with Docker. 
+You will need to add the following lines:
+
+  #SSL
+  COPY --chown=1001:0 target/DigiCertGlobalRootCA.crt /config/
+  RUN keytool -import -trustcacerts -alias myalias -file /config/DigiCertGlobalRootCA.crt -keystore myTrustStore.jks -storepass changeit
+  RUN keytool -list -v -keystore myTrustStore.jks
+
+However attempt to add already existing certificate in the Open Liberty global trust store will result with the following warning:
+
+```
+RUN keytool -import -trustcacerts -alias myalias -file /config/DigiCertGlobalRootCA.crt -keystore myTrustStore.jks -storepass changeit
+ ---> Running in 589cbf0607a5
+Certificate already exists in system-wide CA keystore under alias <digicertglobalrootca [jdk]>
+Do you still want to add it to your own keystore? [no]:  Certificate was not added to keystore
+```
+
+The `docker build` command will create a trust store and add the server certificate to the trust store. Trust store is a place where the client will store all the certificate it trusts. It will use keytool provided by JDK for this. Keytool will be usually present in path java_installation_path/jdk64/bin. Below command will create a truststore “myTrustStore.jks” if it doesn’t exist and add server certificate “mydbserver.arm” into it.
+
+```
+keytool -import -trustcacerts -alias myalias -file mydbserver.arm -keystore       myTrustStore.jks
+```
+
+You can verify the presence of the certificate in the TrustStore by executing the following command.
+```              
+keytool -list -v -keystore myTrustStore.jks
+```
+
+In the server.xml file the following elements needs to be updated when using SSL connection:
+- Set JCC parameter sslConnection to true. sslConnection parameter can be set through Datasource or global properties file or through URL: `ds.setSslConnection(true); (Datasource)`
+-  or `sslConnection=true (global properties file)`
+
+If using the custom truststore file you  need to set parameter `sslTrustStoreLocation` to the path where trust stored is placed and set `sslTrustStorePassword` to the password of the truststore. sslTrustStoreLocation and sslTrustStorePassword parameters can be set through Datasource or global properties file or through URL.
+              
+```
+ ds.setSslTrustStoreLocation("C:/Security/SSL/certificates/mynewdbclient.jks");
+ ds.setSslTrustStorePassword("password"); (Datasource)
+```
+ or
+```
+ sslTrustStoreLocation=C:/Security/SSL/certificates/mynewdbclient.jks
+ sslTrustStroePassword=password  (global properties file)
+```
+
+Optional: The version of the SSL & TLS protocols used will be decided by the JRE used in the application. But if we want to set the version to a different level than the default, we need to set “sslVersion” parameter as shown below.
+- `ds.setSslVersion("TLSv1.1"); (Datasource)`
+- or `sslVersion=TLSv1.1 (global properties file)`
 
 
 ## Step 3
 When the `war` file is available, now you can use `docker` to build your image `(mind the trailing period: ".")`: 
 
 ```
-docker image build -t <your docker id>/open-liberty-db2:0.8 .
+docker image build -t <your docker id>/open-liberty-db2:0.9 .
 ```
 
 ## Step 4
@@ -57,7 +117,22 @@ After creating the data you need to create/copy the service credentials. The cre
 }
 ```
 
-Then you are ready to fillout and run your docker container:
+Then you are ready to fillout the environmental variables and run your docker container:
+
+- `SSL - port 5001`, and `DB2_SSL=true`
+
+```
+docker run  -d -p5050:5050 -p5051:5051 \
+-e DB2_DBNAME="BLUDB" \
+-e DB2_PASSWORD="your-password" \
+-e DB2_PORT=50001 \
+-e DB2_HOST="some-name-xyz.bluemix.net" \
+-e DB2_USER="your-user"  \
+-e DB2_SSL="true"
+<your-docker-id>/open-liberty-db2:0.8
+```
+
+- `NO SSL - port 5000`, and `DB2_SSL=false`
 
 ```
 docker run  -d -p5050:5050 -p5051:5051 \
@@ -66,6 +141,7 @@ docker run  -d -p5050:5050 -p5051:5051 \
 -e DB2_PORT=50000 \
 -e DB2_HOST="some-name-xyz.bluemix.net" \
 -e DB2_USER="your-user"  \
+-e DB2_SSL="false"
 <your-docker-id>/open-liberty-db2:0.8
 ```
 
