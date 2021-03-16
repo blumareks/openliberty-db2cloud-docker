@@ -28,6 +28,8 @@ The jcc library for the DB2 connectivity is obtained via maven, and copied insid
 ## (optional) Step 2b - the DB2 SSL certificate
 **This step is optional, since Open Liberty server has already the certificate to the DB2 included.**
 
+This instructions are based on the method 1 from here: https://www.ibm.com/support/pages/complete-guide-set-ssl-using-ibm-data-server-driver-jdbc-and-sqlj
+
 A DB2 admin should be able to provide a SSL certifcate - the certificate can be downloaded from the DB2 Web console from the Connection Information section.
 
 Move the certificate to the target directory.
@@ -119,7 +121,7 @@ After creating the data you need to create/copy the service credentials. The cre
 
 Then you are ready to fillout the environmental variables and run your docker container:
 
-- `SSL - port 5001`, and `DB2_SSL=true`
+- `SSL - port 50001`, and `DB2_SSL=true`
 
 ```
 docker run  -d -p5050:5050 -p5051:5051 \
@@ -132,7 +134,7 @@ docker run  -d -p5050:5050 -p5051:5051 \
 <your-docker-id>/open-liberty-db2:0.8
 ```
 
-- `NO SSL - port 5000`, and `DB2_SSL=false`
+- `NO SSL - port 50000`, and `DB2_SSL=false`
 
 ```
 docker run  -d -p5050:5050 -p5051:5051 \
