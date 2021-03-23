@@ -245,17 +245,17 @@ These are the typical service credentials that might be obtained through the ser
 
 Then you are ready to fillout the environmental variables and run your docker container:
 
-- `SSL - port 50001`, and `DB2_SSL=true`
+- `SSL - port 30847`, and `DB2_SSL=true`
 
 ```
 docker run  -d -p5050:5050 -p5051:5051 \
 -e DB2_DBNAME="BLUDB" \
 -e DB2_PASSWORD="your-password" \
--e DB2_PORT=50001 \
+-e DB2_PORT=30847 \
 -e DB2_HOST="some-name-xyz.bluemix.net" \
 -e DB2_USER="your-user"  \
 -e DB2_SSL="true" \
-<your-docker-id>/open-liberty-db2:0.8
+<your-docker-id>/open-liberty-db2:1.0
 ```
 
 - `NO SSL - port 50000`, and `DB2_SSL=false`
@@ -270,6 +270,11 @@ docker run  -d -p5050:5050 -p5051:5051 \
 -e DB2_SSL="false" \
 <your-docker-id>/open-liberty-db2:0.8
 ```
+
+**Note:** *You might want to go to the admin console to get the JDBC command to fillout all the data. You might find it here: DB2 Console/Administration/Connections `jdbc:db2://host-name.databases.appdomain.cloud:30847/bludb:user=<user name>;password=<your_password>;sslConnection=true;` - now you can find the port, etc.*
+
+
+
 
 In the seperate terminal run the frontend UI server:
 ```
