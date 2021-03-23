@@ -88,6 +88,48 @@ Optional: The version of the SSL & TLS protocols used will be decided by the JRE
 - or `sslVersion=TLSv1.1 (global properties file)`
 
 
+## (optional) Step 2c - the DB2 SSL certificate and a client certificate
+
+### generating a client certificate
+Generate client certificate, create a KeyStore and add the client certificate to the KeyStore. KeyStore is a place for the client to store its own certificate so that it can provide when requested by servers. The following key command will take care of all 3 steps.
+
+```
+keytool -genkey -keyalg rsa -keystore clientkeystore.jks -storepass password -alias client_cert
+```
+
+The command will ask for details to include in the certificate such as first name, last name, organization unit, organization, city, state & country code. When prompted with ‘Enter key password for’, press Enter to use the same password as the KeyStore password.
+
+**Note:** *It is not recommended to use same JKS as both TrustStore and KeyStore, since KeyStore will contain private key also in addition to client certificate. By using same JKS for both purpose we will be compromising the security of private key.*
+
+### setting the securityMechanism, sslKeyStoreLocation, sslKeyStorePassword
+Set parameter securityMechanism to 18 (DB2BaseDataSource.TLS_CLIENT_CERTIFICATE_SECURITY). This can be done through datasource or global properties file or through URL.
+
+`ds.setSecurityMechanism((com.ibm.db2.jcc.DB2BaseDataSource.TLS_CLIENT_CERTIFICATE_SECURITY));` (Datasource)
+or 
+`securityMechanism=18` (global properties file)
+
+Set parameter `sslKeystoreLocation` to the path where keystore is present. And set `sslKeyStorePassword` to the key store password.
+
+- (Datasource):
+
+```
+ds.setSslKeyStoreLocation("C:/Security/SSL/certificates/clientkeystore.jks");
+ds.setSslKeyStorePassword("password");
+```
+    
+or
+- (global properties file)
+
+```
+sslKeyStoreLocatoin=C:/Security/SSL/certificates/clientkeystore.jks
+sslKeyStorePassword=password     
+```
+
+**Note:** *sslKeystoreLocation and sslKeyStorePassword are supported in JCC4 and not in JCC3. If you are using JCC3 then these properties should be set using system properties.
+`System.setProperty("javax.net.ssl.keyStore","C:/Security/certificates/mykeystore");`
+`System.setProperty("javax.net.ssl.keyStorePassword","123456");`  *
+
+
 ## Step 3
 When the `war` file is available, now you can use `docker` to build your image `(mind the trailing period: ".")`: 
 
