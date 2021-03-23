@@ -59,7 +59,7 @@ These are the typical service credentials that might be obtained through the ser
         "name": "my-cert"
       },
       "composed": [
-        "db2 -u irkgu8og -p 2bJ4OQFf4J8uCosS --ssl --sslCAFile my-cert --authenticationDatabase admin --host generated-host.generated-subdomain.databases.appdomain.cloud:30847"
+        "db2 -u user -p password --ssl --sslCAFile my-cert --authenticationDatabase admin --host generated-host.generated-subdomain.databases.appdomain.cloud:30847"
       ],
       "environment": {},
       "type": "cli"
