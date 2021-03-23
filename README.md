@@ -254,7 +254,7 @@ docker run  -d -p5050:5050 -p5051:5051 \
 -e DB2_PORT=50001 \
 -e DB2_HOST="some-name-xyz.bluemix.net" \
 -e DB2_USER="your-user"  \
--e DB2_SSL="true"
+-e DB2_SSL="true" \
 <your-docker-id>/open-liberty-db2:0.8
 ```
 
@@ -267,7 +267,7 @@ docker run  -d -p5050:5050 -p5051:5051 \
 -e DB2_PORT=50000 \
 -e DB2_HOST="some-name-xyz.bluemix.net" \
 -e DB2_USER="your-user"  \
--e DB2_SSL="false"
+-e DB2_SSL="false" \
 <your-docker-id>/open-liberty-db2:0.8
 ```
 
