@@ -32,86 +32,6 @@ This instructions are based on the method 1 from here: https://www.ibm.com/suppo
 
 A DB2 admin should be able to provide a SSL certifcate - the certificate can be downloaded from the DB2 Web console from the Connection Information section.
 
-These are the typical service credentials that might be obtained through the service detail page in IBM Cloud (edited to remove the actual certificates/users/password):
-```JSON
-{
-  "apikey": "api key",
-  "connection": {
-    "cli": {
-      "arguments": [
-        [
-          "-u",
-          "my user",
-          "-p",
-          "my password",
-          "--ssl",
-          "--sslCAFile",
-          "some id",
-          "--authenticationDatabase",
-          "admin",
-          "--host",
-          "generated-host.generated-subdomain.databases.appdomain.cloud:30847"
-        ]
-      ],
-      "bin": "db2",
-      "certificate": {
-        "certificate_base64": "my cert data",
-        "name": "my-cert"
-      },
-      "composed": [
-        "db2 -u user -p password --ssl --sslCAFile my-cert --authenticationDatabase admin --host generated-host.generated-subdomain.databases.appdomain.cloud:30847"
-      ],
-      "environment": {},
-      "type": "cli"
-    },
-    "db2": {
-      "authentication": {
-        "method": "direct",
-        "password": "direct-password",
-        "username": "direct-user"
-      },
-      "certificate": {
-        "certificate_base64": "direct cert data",
-        "name": "my-direct-cert"
-      },
-      "composed": [
-        "db2://generated-host.generated-subdomain.databases.appdomain.cloud:30847/bludb?authSource=admin&replicaSet=replset"
-      ],
-      "database": "bludb",
-      "host_ros": [
-        "generated-host.generated-subdomain.databases.appdomain.cloud:32735"
-      ],
-      "hosts": [
-        {
-          "hostname": "generated-host.generated-subdomain.databases.appdomain.cloud",
-          "port": 30847
-        }
-      ],
-      "jdbc_url": [
-        "jdbc:db2://generated-host.generated-subdomain.databases.appdomain.cloud:30847/bludb:user=<userid>;password=<your_password>;sslConnection=true;"
-      ],
-      "path": "/bludb",
-      "query_options": {
-        "authSource": "admin",
-        "replicaSet": "replset"
-      },
-      "replica_set": "replset",
-      "scheme": "db2",
-      "type": "uri"
-    }
-  },
-  "iam_apikey_description": "Auto-generated for key your-key",
-  "iam_apikey_name": "Service credentials-fiserv",
-  "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
-  "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/iam-identity::serviceid:ServiceId",
-  "instance_administration_api": {
-    "deployment_id": "crn:v1:bluemix:public:dashdb-for-transactions:us-south:a/iam-identity:ident-pass::",
-    "instance_id": "crn:v1:bluemix:public:dashdb-for-transactions:us-south:a/iam-identity:ident-pass::",
-    "root": "https://api.us-south.db2.cloud.ibm.com/v4/ibm"
-  }
-}
-```
-
 Move the certificate to the target directory.
 
 ```
@@ -221,6 +141,88 @@ docker image build -t <your docker id>/open-liberty-db2:0.9 .
 You can run the docker container, and access the properties page. Collect the data from DB2 cloud service or DB2 server - alternatively create DB2 Cloud based service here (`free!`): https://cloud.ibm.com/catalog/services/db2 
 After creating the data you need to create/copy the service credentials. The credentials would look like this:
 
+- Standard DB2:
+These are the typical service credentials that might be obtained through the service detail page in IBM Cloud (edited to remove the actual certificates/users/password):
+```JSON
+{
+  "apikey": "api key",
+  "connection": {
+    "cli": {
+      "arguments": [
+        [
+          "-u",
+          "my user",
+          "-p",
+          "my password",
+          "--ssl",
+          "--sslCAFile",
+          "some id",
+          "--authenticationDatabase",
+          "admin",
+          "--host",
+          "generated-host.generated-subdomain.databases.appdomain.cloud:30847"
+        ]
+      ],
+      "bin": "db2",
+      "certificate": {
+        "certificate_base64": "my cert data",
+        "name": "my-cert"
+      },
+      "composed": [
+        "db2 -u user -p password --ssl --sslCAFile my-cert --authenticationDatabase admin --host generated-host.generated-subdomain.databases.appdomain.cloud:30847"
+      ],
+      "environment": {},
+      "type": "cli"
+    },
+    "db2": {
+      "authentication": {
+        "method": "direct",
+        "password": "direct-password",
+        "username": "direct-user"
+      },
+      "certificate": {
+        "certificate_base64": "direct cert data",
+        "name": "my-direct-cert"
+      },
+      "composed": [
+        "db2://generated-host.generated-subdomain.databases.appdomain.cloud:30847/bludb?authSource=admin&replicaSet=replset"
+      ],
+      "database": "bludb",
+      "host_ros": [
+        "generated-host.generated-subdomain.databases.appdomain.cloud:32735"
+      ],
+      "hosts": [
+        {
+          "hostname": "generated-host.generated-subdomain.databases.appdomain.cloud",
+          "port": 30847
+        }
+      ],
+      "jdbc_url": [
+        "jdbc:db2://generated-host.generated-subdomain.databases.appdomain.cloud:30847/bludb:user=<userid>;password=<your_password>;sslConnection=true;"
+      ],
+      "path": "/bludb",
+      "query_options": {
+        "authSource": "admin",
+        "replicaSet": "replset"
+      },
+      "replica_set": "replset",
+      "scheme": "db2",
+      "type": "uri"
+    }
+  },
+  "iam_apikey_description": "Auto-generated for key your-key",
+  "iam_apikey_name": "Service credentials-fiserv",
+  "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+  "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/iam-identity::serviceid:ServiceId",
+  "instance_administration_api": {
+    "deployment_id": "crn:v1:bluemix:public:dashdb-for-transactions:us-south:a/iam-identity:ident-pass::",
+    "instance_id": "crn:v1:bluemix:public:dashdb-for-transactions:us-south:a/iam-identity:ident-pass::",
+    "root": "https://api.us-south.db2.cloud.ibm.com/v4/ibm"
+  }
+}
+```
+
+- LITE DB2 version
 ```json
 {
   "db": "BLUDB",
