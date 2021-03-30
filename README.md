@@ -11,7 +11,13 @@ git clone https://github.com/blumareks/openliberty-db2cloud-docker.git
 cd openliberty-db2cloud-docker
 ```
 
-## Step 2
+## Step 2a - JDBC library
+The version differs by the driver release. 
+- For version DB2 11.5 use the jcc library for the DB2 connectivity from the file `pom.xml.copy.DB2.11.5`. Rename it to `pom.xml`. When you run maven in `step 2b`, the library will be downloaded and copied by `mvn package`. Also rename `Dockerfile.copy.DB2.11.5` to `Dockerfile`. Also rename `backendServices/src/main/liberty/config/server.xml.copy.11.5` to `server.xml`
+
+- For version DB2 10.5 you need to manually download the DB2 driver to backendServices/target/backendServices/WEB-INF/lib/, and rename `pom.xml.copy.DB2.10.5` to `pom.xml`. You need to rename `Dockerfile.copy.DB2.10.5` to `Dockerfile`. Also rename `backendServices/src/main/liberty/config/server.xml.copy.10.5` to `server.xml`
+
+## Step 2b
 In order to proceed you need to use `maven` to build the `war` file with the demo application 
 - there are 2 subdirectories: `backendServices` and `frontendUI`
 - the backend services will be running as a Docker container
@@ -21,9 +27,6 @@ In order to proceed you need to use `maven` to build the `war` file with the dem
 cd backendServices
 mvn package
 ```
-
-## Step 2a - JDBC library
-The jcc library for the DB2 connectivity is obtained via maven, and copied inside Dockerfile commands.
 
 ## (optional) Step 2b - the DB2 SSL certificate
 **This step is optional, since Open Liberty server has already the certificate to the DB2 included.**
