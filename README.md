@@ -15,7 +15,7 @@ cd openliberty-db2cloud-docker
 The version differs by the driver release. 
 - For version DB2 11.5 use the jcc library for the DB2 connectivity from the file `pom.xml.copy.DB2.11.5`. Rename it to `pom.xml`. When you run maven in `step 2b`, the library will be downloaded and copied by `mvn package`. Also rename `Dockerfile.copy.DB2.11.5` to `Dockerfile`. Also rename `backendServices/src/main/liberty/config/server.xml.copy.11.5` to `server.xml`
 
-- For version DB2 10.5 you need to manually download the DB2 driver to backendServices/target/backendServices/WEB-INF/lib/, and rename `pom.xml.copy.DB2.10.5` to `pom.xml`. You need to rename `Dockerfile.copy.DB2.10.5` to `Dockerfile`. Also rename `backendServices/src/main/liberty/config/server.xml.copy.10.5` to `server.xml`
+- For version DB2 10.5 you need to manually download the DB2 driver to backendServices/target/backendServices/WEB-INF/lib/, and rename `pom.xml.copy.DB2.10.5` to `pom.xml`. You need to rename `Dockerfile.copy.DB2.10.5` to `Dockerfile`. Also rename `backendServices/src/main/liberty/config/server.xml.copy.10.5` to `server.xml`; the adequate driver verison can be found here: https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads
 
 ## Step 2b
 In order to proceed you need to use `maven` to build the `war` file with the demo application 
