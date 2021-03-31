@@ -61,13 +61,12 @@
             <version>1.1.4</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.ibm.db2/jcc 
+        <!-- https://mvnrepository.com/artifact/com.ibm.db2/jcc -->
         <dependency>
             <groupId>com.ibm.db2</groupId>
             <artifactId>jcc</artifactId>
             <version>11.5.5.0</version>
         </dependency> 
-        -->
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -82,15 +81,7 @@
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>3.3.1</version>
-                <!-- configuration>
-                    <copyDependencies>
-                        <location>${project.build.directory}/liberty/wlp/usr/shared/resources</location>
-                        <dependency>
-                             <groupId>com.ibm.db2</groupId>
-                             <artifactId>jcc</artifactId>
-                         </dependency>
-                    </copyDependencies>
-                </configuration>-->
+                
             </plugin>
             <!-- Plugin to run unit tests -->
             <plugin>

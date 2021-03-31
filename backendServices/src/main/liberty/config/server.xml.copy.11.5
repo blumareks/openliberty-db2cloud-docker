@@ -16,12 +16,12 @@
   <application location="backendServices.war" type="war" context-root="/">
   </application>
   
-  <!-- manually dealing with the files: 
+  <!-- using maven to download the driver instead of manually dealing with the files: 
     "db2jcc4.jar db2jcc_license_cu.jar"  
   -->
 
   <library id="db2jcclib">
-    <fileset dir="${shared.resource.dir}" includes="*.jar"/>
+    <fileset dir="${shared.resource.dir}" includes="jcc*.jar"/>
   </library>
 
 
